@@ -1,0 +1,88 @@
+@import "./colors";
+@import "./common";
+@import "./displays";
+@import "../mixins/common";
+
+html, body {
+  margin: 0;
+  padding: 0;
+  @include font-base();
+  color: $color-font-base;
+  letter-spacing: 0.2px;
+  height: 100%;
+}
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #2c3e50;
+}
+h4, p {
+  margin: 0;
+  padding: 0;
+}
+p {
+  font-size: 14px;
+}
+.h4-center {
+  text-align: center;
+  font-size: 23px;
+  @media (max-width: $mobileAverage) {
+    font-size: 20px;
+  }
+}
+.p-center {
+  text-align: center;
+}
+.small-description {
+  font-size: 13px;
+}
+.form-300 {
+  margin: 100px auto;
+  width: 400px;
+  @media (max-width: $mobileMax) {
+    margin: 50px auto;
+  }
+  @media (max-width: $mobileAverage) {
+    width: 290px;
+  }
+}
+.spot-link {
+  color: $color-base-middle;
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}
+
+/* notifications */
+.vue-notification {
+  font-size: 17px;
+  &.info {
+    background: $color-info;
+    border-left-color: $color-info;
+  }
+}
+.custom-invalid-feedback {
+  width: 100%;
+  margin-top: .25rem;
+  font-size: 80%;
+  color: #dc3545;
+}
+
+/* nav */
+.app-bar-user-email {
+  color: #fff;
+  font-size: 16px;
+  margin-right: 10px;
+}
+.top-nav-title {
+  cursor: pointer;
+}
+
+/* form */
+.group-permissions {
+  .v-messages {
+    display: none !important;
+  }
+}

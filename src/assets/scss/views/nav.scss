@@ -1,0 +1,35 @@
+nav {
+  background-color: $color-base-middle !important;
+  &.navbar-light {
+    background-color: #e3f2fd;
+  }
+  .navbar-brand {
+    color: #fff;
+  }
+  .nav-link, .navbar-brand, .dropdown-item {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  .dropdown-menu {
+    left: auto;
+    right: 5px !important;
+    .dropdown-item {
+      &:hover {
+        background-color: $color-button-bg;
+      }
+    }
+  }
+  .nav-item {
+    .nav-link {
+      opacity: .8;
+      color: #fff;
+    }
+    &.active {
+      .nav-link {
+        opacity: 1 !important;
+        color: #fff  !important;
+      }
+    }
+  }
+}

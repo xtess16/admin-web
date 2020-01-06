@@ -1,0 +1,255 @@
+@import "./colors";
+@import "./common";
+@import "./displays";
+@import "../mixins/common";
+
+//@font-face {
+//  font-family: 'Futura';
+//  src: url('./assets/fonts/Futura-Normal.ttf') format('ttf'), url('./assets/fonts/Futura-Normal.ttf') format('ttf');
+//}
+//@font-face {
+//  font-family: 'Futura-Bold';
+//  src: url('./assets/fonts/futuramediumc.otf') format('ttf'), url('./assets/fonts/futuramediumc.otf') format('ttf');
+//}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  @include font-base();
+  color: $color-font-base;
+  letter-spacing: 0.2px;
+  height: 100%;
+}
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #2c3e50;
+}
+h4, p {
+  margin: 0;
+  padding: 0;
+}
+p {
+  font-size: 14px;
+}
+.h4-center {
+  text-align: center;
+  font-size: 23px;
+  @media (max-width: $mobileAverage) {
+    font-size: 20px;
+  }
+}
+.p-center {
+  text-align: center;
+}
+.small-description {
+  font-size: 13px;
+}
+
+/* Form */
+//textarea:hover,
+//input:hover,
+//textarea:active,
+//input:active,
+//textarea:focus,
+//input:focus,
+//button:focus,
+//button:active,
+//button:hover,
+//label:focus,
+//.btn:active,
+//.btn.active
+//{
+//  outline:0 !important;
+//  -webkit-appearance:none;
+//  box-shadow: none !important;
+//}
+.form-submit-button {
+  margin-top: 20px;
+}
+.mat-form-field-appearance-legacy .mat-form-field-infix {
+  padding: 3px 0;
+}
+.form-control, .custom-select, .custom-file-input, .custom-file-label, .custom-file-label::after {
+  padding-left: 5px !important;
+  height: 30px;
+  line-height: 1;
+}
+.custom-file-label::after, .btn-input-control {
+  height: 30px;
+  line-height: 1;
+}
+.spot-form-group {
+  padding: 20px;
+  @media (max-width: $mobileAverage) {
+    padding: 15px;
+  }
+}
+.spot-form-header {
+  padding: 10px 0;
+  border-bottom: 1px solid $color-font-light;
+  @media (max-width: $mobileAverage) {
+    padding: 5px 0;
+  }
+}
+.spot-form-after {
+  text-align: center;
+  padding-top: 0 !important;
+  span, a {
+    font-size: 14px !important;
+  }
+  span {
+    margin-right: 10px;
+  }
+}
+.form-300 {
+  margin: 100px auto;
+  width: 400px;
+  @media (max-width: $mobileMax) {
+    margin: 50px auto;
+  }
+  @media (max-width: $mobileAverage) {
+    width: 290px;
+  }
+}
+.spot-link {
+  color: $color-base-middle;
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}
+.custom-form-field {
+  display: flex;
+  flex-direction: column;
+  &-label {
+    font-size: 13px;
+  }
+}
+.checkbox-link {
+  margin-top: 5px;
+}
+/* Внутренние вкладки и их контент */
+.nav-tabs {
+  .nav-item {
+    .nav-link {
+      color: $color-base-middle;
+      &:hover {
+        cursor: pointer;
+        color: $color-base;
+      }
+      &.active {
+        color: $color-font-base;
+        &:hover {
+          color: $color-font-not-active;
+        }
+      }
+    }
+  }
+}
+.tab-pane {
+  margin-top: 10px;
+}
+
+/* COMMON */
+.title-block {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  .card-title {
+    margin-bottom: 0;
+    margin-right: 5px;
+    &:first-letter {
+      text-transform: uppercase;
+    }
+  }
+  .btn-group-sm>.btn, .btn-sm {
+    padding: 0 10px;
+    height: 25px;
+    margin-right: 5px;
+  }
+}
+.no-wrap-text {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.list-group-item {
+  &.custom-list {
+    padding: 7px;
+    font-size: 15px;
+  }
+}
+
+.content-permission {
+  display: flex;
+  flex-wrap: wrap;
+  .permission-item {
+    display: flex;
+    flex-direction: column;
+    min-width: 200px;
+    max-width: 250px;
+    margin-bottom: 10px;
+    &-title {
+
+    }
+    &-action {
+      display: flex;
+      flex-direction: column;
+      &-label {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+.op-groups {
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+  &-item {
+
+  }
+}
+
+.card {
+  margin-bottom: 10px;
+  .card-header {
+    .card-header-pills {
+      margin-left: 0;
+      .nav {
+        &-link {
+          color: $field-invalid;
+          font-size: 15px;
+          padding: 0;
+          &:hover {
+            cursor: pointer;
+            text-decoration: underline;
+          }
+          &:active {
+            text-decoration: none;
+          }
+        }
+        &-title {
+          font-size: 16px;
+          padding: 0;
+        }
+      }
+    }
+  }
+}
+
+/* notifications */
+.vue-notification {
+  font-size: 17px;
+  &.info {
+    background: $color-info;
+    border-left-color: $color-info;
+  }
+}
+.custom-invalid-feedback {
+  width: 100%;
+  margin-top: .25rem;
+  font-size: 80%;
+  color: #dc3545;
+}

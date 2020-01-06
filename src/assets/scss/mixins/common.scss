@@ -1,0 +1,133 @@
+@import "../common/colors";
+@import "../common/animations";
+
+@mixin modal-shadow() {
+  -webkit-box-shadow: 0 0 6px 1px rgba(0,0,0,0.2);
+  -moz-box-shadow: 0 0 6px 1px rgba(0,0,0,0.2);
+  box-shadow: 0 0 6px 1px rgba(0,0,0,0.2);
+}
+
+@mixin font-base() {
+  font-family: Futura, Arial, Helvetica, sans-serif;
+}
+@mixin font-bold() {
+  font-family: Futura-Bold, Arial, Helvetica, sans-serif;
+}
+@mixin transitionLinear() {
+  -webkit-transition: 0.2s linear;
+  -moz-transition: 0.2s linear;
+  -o-transition: 0.2s linear;
+  transition: 0.2s linear;
+}
+@mixin scrollbarBase() {
+  &::-webkit-scrollbar {
+    width: 3px;
+  }
+  &::-webkit-scrollbar-button { // кнопки края
+    background: #505050;
+    height: 5px;
+  }
+  &::-webkit-scrollbar-track-piece { // Фон
+    background: #f1f1f1;
+  }
+  &::-webkit-scrollbar-thumb { // Динамический скролл
+    background: #c1c2c1;
+  }
+}
+@mixin scrollbarBaseWithColorBase() {
+  &::-webkit-scrollbar {
+    width: 3px;
+  }
+  &::-webkit-scrollbar-button { // кнопки края
+    background: #505050;
+    height: 5px;
+  }
+  &::-webkit-scrollbar-track-piece { // Фон
+    background: #f1f1f1;
+  }
+  &::-webkit-scrollbar-thumb { // Динамический скролл
+    background: $color-base;
+  }
+}
+@mixin scrollbarForTabs() {
+  &::-webkit-scrollbar {
+    width: 1px;
+    height: 5px;
+  }
+  &::-webkit-scrollbar-button { // кнопки края
+    background: $color-font-light;
+    height: 0;
+    width: 0;
+  }
+  &::-webkit-scrollbar-track-piece { // Фон
+    background: $color-bg;
+  }
+  &::-webkit-scrollbar-thumb { // Динамический скролл
+    background: $color-bg-dark;
+  }
+}
+@mixin scrollbarForTextarea() {
+  &::-webkit-scrollbar {
+    width: 5px;
+    height: 7px;
+  }
+  &::-webkit-scrollbar-button { // кнопки края
+    background: $color-font-light;
+    height: 0;
+    width: 0;
+  }
+  &::-webkit-scrollbar-track-piece { // Фон
+    background: #fff;
+  }
+  &::-webkit-scrollbar-thumb { // Динамический скролл
+    background: $color-bg-dark;
+  }
+}
+@mixin scrollbarForMatSelectPanel() {
+  &::-webkit-scrollbar {
+    width: 5px;
+    height: 7px;
+  }
+  &::-webkit-scrollbar-button { // кнопки края
+    background: $color-font-light;
+    height: 0;
+    width: 0;
+  }
+  &::-webkit-scrollbar-track-piece { // Фон
+    background: #fff;
+  }
+  &::-webkit-scrollbar-thumb { // Динамический скролл
+    background: $color-base;
+  }
+}
+@mixin openCloseLeftBarAnimation() { // Анимация слева-направо
+  &.sidenav-is-closed {
+    visibility: hidden;
+    width: 0;
+    overflow: hidden;
+  }
+  &.sidenav-is-open {
+    animation-name: slideRight;
+    -webkit-animation-name: slideRight;
+    animation-duration: .2s;
+    -webkit-animation-duration: .2s;
+    animation-timing-function: ease-in-out;
+    -webkit-animation-timing-function: ease-in-out;
+    visibility: visible !important;
+  }
+}
+@mixin openCloseLeftBar() { // Без анимации
+  &.sidenav-is-closed {
+    visibility: hidden;
+    width: 0;
+    overflow: hidden;
+  }
+  &.sidenav-is-open {
+    visibility: visible !important;
+  }
+}
+@mixin modalMaxHeightWithScroll() { // Без анимации
+  max-height: 150px;
+  overflow-y: auto;
+  @include scrollbarBase();
+}

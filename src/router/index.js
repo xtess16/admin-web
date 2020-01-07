@@ -42,7 +42,7 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.name === 'login' || from.name) {
+  if (to.name === 'login' || (from.name && from.name !== 'login')) {
     return next()
   }
   store.dispatch("users/checkAuth").then(() => {

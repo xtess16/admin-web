@@ -1,46 +1,58 @@
 <template>
-    <div class="form-300">
-        <div class="card">
-            <div class="card-header">
-                <ul class="nav nav-pills card-header-pills">
-                    <li class="nav-item">
-                        <p class="nav-title">Вход в панель администратора</p>
-                    </li>
-                </ul>
-            </div>
-            <div class="card-body">
-                <form @submit.prevent="submit">
-                    <div class="form-row">
-                        <div class="form-group col-md-12 mb-3">
-                            <label>Email</label>
-                            <input type="email"
-                                   class="form-control"
-                                   :class="{'is-invalid': $v.email.$error}"
-                                   @blur="$v.email.$touch()"
-                                   v-model="email">
-                            <div v-if="!$v.email.required"
-                                 class="invalid-feedback">Поле обязательно</div>
-                            <div v-if="!$v.email.email"
-                                 class="invalid-feedback">Некорректный email</div>
-                        </div>
-                        <div class="form-group col-md-12 mb-3">
-                            <label>Пароль</label>
-                            <input type="password"
-                                   class="form-control"
-                                   :class="{'is-invalid': $v.password.$error}"
-                                   @blur="$v.password.$touch()"
-                                   v-model="password">
-                            <div v-if="!$v.password.required"
-                                 class="invalid-feedback">Поле обязательно</div>
-                            <div v-if="!$v.password.minLength"
-                                 class="invalid-feedback">Не менее 8 символов</div>
-                        </div>
-                    </div>
-                    <button class="btn btn-info" type="submit">Войти</button>
-                </form>
-            </div>
-        </div>
-    </div>
+    <v-app id="inspire">
+        <v-content>
+            <v-container class="fill-height"
+                         fluid>
+                <v-row align="center"
+                       justify="center">
+                    <v-col cols="12"
+                           sm="8"
+                           md="4">
+                        <v-card class="elevation-12">
+                            <v-toolbar color="primary"
+                                       dark
+                                       flat>
+                                <v-toolbar-title>Вход в панель администратора</v-toolbar-title>
+                                <v-spacer />
+                            </v-toolbar>
+                            <v-card-text>
+                                <v-form ref="form"
+                                        v-model="valid"
+                                        lazy-validation>
+                                    <v-text-field
+                                            label="Email"
+                                            name="email"
+                                            v-model="email"
+                                            :rules="validate.email"
+                                            required
+                                            :counter="50"
+                                            prepend-icon="person"
+                                            type="text" />
+
+                                    <v-text-field
+                                            id="password"
+                                            label="Пароль"
+                                            v-model="password"
+                                            :rules="validate.password"
+                                            name="password"
+                                            required
+                                            :counter="100"
+                                            prepend-icon="lock"
+                                            type="password" />
+                                </v-form>
+                            </v-card-text>
+                            <v-card-actions>
+                                <v-spacer />
+                                <v-btn color="primary"
+                                       :disabled="!valid"
+                                       @click="submit">Вход</v-btn>
+                            </v-card-actions>
+                        </v-card>
+                    </v-col>
+                </v-row>
+            </v-container>
+        </v-content>
+    </v-app>
 </template>
 
 <script>
@@ -51,8 +63,20 @@
     name: "Login",
     data() {
       return {
+        valid: false,
         email: '',
         password: '',
+        validate: {
+          email: [
+            v => !!v || 'Поле обязательно',
+            v => v.length <= 50 || 'Не более 50 символов',
+          ],
+          password: [
+            v => !!v || 'Поле обязательно',
+            v => v.length >= 4 || 'Не менее 4 символов',
+            v => v.length <= 100 || 'Не более 100 символов',
+          ],
+        }
       }
     },
     methods: {
@@ -60,12 +84,12 @@
         loginAction: 'users/login',
       }),
       submit() {
-        this.$v.$touch();
-        if (!this.$v.$invalid) {
+        if (this.$refs.form.validate()) {
             this.loginAction({
               email: this.email,
               password: this.password
             }).then(() => {
+              console.log(2);
               this.$router.push('/')
             }, () => {
               this.$notify({

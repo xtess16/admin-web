@@ -28,6 +28,9 @@
       getDateStr(date) {
         return moment(date).format('DD-MM-YYYY');
       },
+      getDateTimeStr(date) {
+        return moment(date).format('DD-MM-YYYY HH:mm');
+      },
       getBoolStr(state) {
         return state ? 'Да' : 'Нет';
       },

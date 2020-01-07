@@ -1,13 +1,13 @@
 import axios, {getJWTBodyData} from "../plugins/axios";
-import {isNotEmptyObject} from "../functions/is";
+// import {isNotEmptyObject} from "../functions/is";
 import router from '../router';
+import {UserModel} from '../models/UserModel';
 
 const LOGIN = "LOGIN";
 const LOGOUT = "LOGOUT";
 const CHECK_AUTH = "CHECK_AUTH";
-// const GROUP_LIST = "GROUP_LIST";
 const GROUP_PERMISSIONS_LIST = "GROUP_PERMISSIONS_LIST";
-// const USER_LIST = "USER_LIST";
+const USER_LIST = "USER_LIST";
 const GROUP_SAVE = "GROUP_SAVE";
 const GROUP_PERMISSION_SAVE = "GROUP_PERMISSION_SAVE";
 // const USER_SAVE = "USER_SAVE";
@@ -35,13 +35,12 @@ const users = {
         CHECK_AUTH(state, data) {
             state.isAuthenticated = true;
             state.currentUser = data.user;
-            if (isNotEmptyObject(data.info)) {
-                state.groups = data.info.groups;
-                state.permissions = data.info.permissions;
-            }
+            state.groups = data.info.groups;
+            state.permissions = data.info.permissions;
         },
-        GROUP_LIST(state, groups) {
-            state.groups = groups;
+        GROUP_PERMISSIONS_LIST(state, data) {
+            state.groups = data.groups;
+            state.permissions = data.permissions;
         },
         GROUP_SAVE(state, savedGroup) {
             const groups = state.groups;
@@ -66,14 +65,15 @@ const users = {
                 return group;
             })
         },
-        GROUP_PERMISSIONS_LIST(state, data) {
-            state.groups = data.groups;
-            state.permissions = data.permissions;
+        USER_LIST(state, data) {
+            state.users = data.users.map(user =>
+              new UserModel().deserialize(user));
         },
     },
     getters: {
         isAuthenticated: state => state.isAuthenticated,
         getGroups: state => state.groups,
+        getUsers: state => state.users,
         getCurrentUser: state => state.currentUser,
         getGroupById: (state) => {
             return (id) => state.groups.find(gr => gr.id === parseInt(id))
@@ -147,6 +147,14 @@ const users = {
                     commit(GROUP_PERMISSIONS_LIST, data.info);
                 })
                 .catch(error => console.log(error));
+        },
+        fetchUsers({ commit }) {
+            axios.get('/admin/users/')
+              .then(response => {
+                  const data = response.data;
+                  commit(USER_LIST, data);
+              })
+              .catch(error => console.log(error));
         },
         groupSave({ commit }, payload) {
             return new Promise((resolve, reject) => {

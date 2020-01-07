@@ -8,14 +8,13 @@
             <v-list-item
                     v-for="item in listItems"
                     :key="item.title"
+                    :to="{name: 'eTable', params: {name: item.link}}"
                     link>
                 <v-list-item-icon>
                     <v-icon>{{ item.icon }}</v-icon>
                 </v-list-item-icon>
-
                 <v-list-item-content>
                     <v-list-item-title style="font-size: 17px;"
-                                       @click="selectItemList(item)"
                     >{{ item.title }}</v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
@@ -42,17 +41,6 @@
             icon: 'person'
           },
         ]
-      }
-    },
-    computed: {
-
-    },
-    methods: {
-      selectItemList: function (item) {
-        this.currentLink = item.link;
-        if (this.$route.path !== `/e-table/${item.link}`) {
-          this.$router.push({name: 'eTable', params: {name: item.link}});
-        }
       }
     },
   }

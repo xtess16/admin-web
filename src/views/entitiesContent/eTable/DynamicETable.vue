@@ -6,16 +6,19 @@
 
 <script>
   import Groups from "./Groups";
+  import Users from "./Users";
 
   export default {
     name: "DynamicETable",
     components: {
       Groups,
+      Users,
     },
     data () {
       return {
         pages: {
           groups: "Groups",
+          users: "Users",
         },
         component: '',
       }

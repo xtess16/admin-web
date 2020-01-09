@@ -10,17 +10,17 @@ export class AbstractEntityModel {
     Object.keys(arg).forEach(v => {
       converted[snakeToCamel(v)] = arg[v];
     });
-    Object.assign(this, converted);
-    return this;
+    return converted;
   }
 
   /* Перед отправкой объекта на сервер конвертируем его поля в нужный для сохранения в базу формат */
   serialize(arg) {
+    const _arg = Object.assign({}, arg);
     const converted = {};
-    Object.keys(arg).forEach(v => {
-      converted[camelToSnake(v)] = arg[v];
+    Object.keys(_arg).forEach((v, i) => {
+      console.log(1, i)
+      converted[camelToSnake(v)] = _arg[v];
     });
-    Object.assign(this, converted);
-    return this;
+    return converted;
   }
 }

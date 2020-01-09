@@ -6,16 +6,19 @@
 
 <script>
   import Group from "./Group";
+  import User from "./User";
 
   export default {
     name: "DynamicEAddEdit",
     components: {
       Group,
+      User,
     },
     data () {
       return {
         page: {
           groups: "Group",
+          users: "User",
         },
         component: '',
       }

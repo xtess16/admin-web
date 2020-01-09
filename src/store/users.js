@@ -10,8 +10,8 @@ const GROUP_PERMISSIONS_LIST = "GROUP_PERMISSIONS_LIST";
 const USER_LIST = "USER_LIST";
 const GROUP_SAVE = "GROUP_SAVE";
 const GROUP_PERMISSION_SAVE = "GROUP_PERMISSION_SAVE";
-// const USER_SAVE = "USER_SAVE";
-// const USER_GROUP_SAVE = "USER_GROUP_SAVE";
+const USER_SAVE = "USER_SAVE";
+const USER_GROUP_SAVE = "USER_GROUP_SAVE";
 
 const users = {
     namespaced: true,
@@ -34,7 +34,8 @@ const users = {
         },
         CHECK_AUTH(state, data) {
             state.isAuthenticated = true;
-            state.currentUser = data.user;
+            state.currentUser = new UserModel().deserialize(data.user);
+            state.users = data.users.map(user => new UserModel().deserialize(user));
             state.groups = data.info.groups;
             state.permissions = data.info.permissions;
         },
@@ -68,6 +69,29 @@ const users = {
         USER_LIST(state, data) {
             state.users = data.users.map(user =>
               new UserModel().deserialize(user));
+        },
+        USER_SAVE(state, savedUser) {
+            const users = state.users;
+            const foundUser = users.find(user => user.id === savedUser.id);
+            if (foundUser) {
+                Object.assign(foundUser, savedUser);
+            } else {
+                users.push(savedUser);
+            }
+            state.users = users;
+        },
+        USER_GROUP_SAVE(state, payload) {
+            state.users = state.users.map(user => {
+                if (user.id === payload.userId) {
+                    if (payload.isChecked) {
+                        user.groups.push(payload.groupId)
+                    } else {
+                        user.groups = user.groups
+                          .filter(groupId => groupId !== payload.groupId)
+                    }
+                }
+                return user;
+            })
         },
     },
     getters: {
@@ -114,6 +138,19 @@ const users = {
             }
             return list;
         },
+        getUserById: (state) => {
+            return (id) => state.users.find(user => user.id === id)
+        },
+        getUserGroups: state => (id) => {
+            const user = state.users.find(user => user.id === id);
+            const groups = state.groups;
+            if (user) {
+                groups.forEach(group => {
+                    group.isChecked = user.groups.includes(group.id);
+                });
+            }
+            return groups;
+        }
     },
     actions: {
         async login({ commit }, payload) {
@@ -178,6 +215,34 @@ const users = {
                     is_checked: payload.isChecked,
                 }).then(response => {
                     commit(GROUP_PERMISSION_SAVE, payload);
+                    resolve(response);
+                }, error => {
+                    reject(error);
+                })
+            });
+        },
+        userSave({ commit }, user) {
+            return new Promise((resolve, reject) => {
+                const method = user.id ? 'put' : 'post';
+                axios[method]('/admin/users/save/', {
+                    user: new UserModel().serialize(user)
+                }).then(response => {
+                    const data = response.data;
+                    commit(USER_SAVE, new UserModel().deserialize(data.user));
+                    resolve(response);
+                }, error => {
+                    reject(error);
+                })
+            });
+        },
+        userGroupSave({ commit }, payload) {
+            return new Promise((resolve, reject) => {
+                axios.post('/admin/user-group-save/', {
+                    user_id: payload.userId,
+                    group_id: payload.groupId,
+                    is_checked: payload.isChecked,
+                }).then(response => {
+                    commit(USER_GROUP_SAVE, payload);
                     resolve(response);
                 }, error => {
                     reject(error);

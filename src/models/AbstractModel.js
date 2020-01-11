@@ -17,8 +17,7 @@ export class AbstractEntityModel {
   serialize(arg) {
     const _arg = Object.assign({}, arg);
     const converted = {};
-    Object.keys(_arg).forEach((v, i) => {
-      console.log(1, i)
+    Object.keys(_arg).forEach(v => {
       converted[camelToSnake(v)] = _arg[v];
     });
     return converted;

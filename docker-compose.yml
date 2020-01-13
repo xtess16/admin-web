@@ -3,6 +3,7 @@ version: '3.7'
 services:
   sdocsweb:
     image: sdocs_admin_web
+    restart: always
     build:
       context: ./
     working_dir: /usr/src/app

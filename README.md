@@ -40,12 +40,19 @@ git checkout dev
 ```sh
 git branch
 ```
-#### Скопировать env.example в .env
+#### Скопировать .env.example в .env
 - Если нужно, отредактировать хост
-
+```
+cp .env.example .env
+```
 #### Сбилдить образ и поднять контейнер
 ```
 docker-compose up -d --build
+```
+
+#### Панель админимтратора доступна в браузере по адресу:
+```
+http://localhost:8081
 ```
 ---
 ## Частые команды Docker

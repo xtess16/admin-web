@@ -87,6 +87,8 @@
   import {required} from "vuelidate/lib/validators";
   import AddEditMixin from "../../../components/mixins/AddEditMixin";
   import NotifyMixin from "../../../components/mixins/NotifyMixin";
+  import {getEmptyObjectByModel} from "../../../functions/common";
+  import {UserModel} from "../../../models/UserModel";
 
   export default {
     name: "User",
@@ -104,11 +106,7 @@
           { link: 'groups', title: 'Группы' },
         ],
         user: {
-          email: '',
-          firstName: '',
-          lastName: '',
-          isActive: true,
-          isStaff: true,
+          id: null
         },
         userGroups: [],
         validate: {
@@ -125,6 +123,9 @@
           ],
         }
       }
+    },
+    created() {
+      this.user = getEmptyObjectByModel(new UserModel());
     },
     mounted() {
       const user = this.userById(this.id);

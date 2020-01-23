@@ -6,11 +6,18 @@ export class UserModel extends AbstractEntityModel {
   firstName = '';
   lastName = '';
   lastLogin = '';
-  isActive = false;
-  isStaff = false;
+  isActive = true;
+  isStaff = true;
   groups = [];
 
   constructor() {
     super();
+  }
+
+  serialize(user) {
+    const converted = super.serialize(user);
+    /* При создании/редактировании пользователя группы не передаём. Они сохраняются отдельно. */
+    delete converted.groups;
+    return converted;
   }
 }

@@ -18,3 +18,13 @@ export function partitionArr(fullArray, cond) {
 
   return [first, second];
 }
+/* Получить пустой объект с нужными полями по шаблону модели */
+export function getEmptyObjectByModel(model) {
+  const emptyObj = {};
+  Object.keys(model).forEach(v => {
+    if (model[v] !== 'undefined') {
+      emptyObj[v] = model[v];
+    }
+  });
+  return emptyObj;
+}

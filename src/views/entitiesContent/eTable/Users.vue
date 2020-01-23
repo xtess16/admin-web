@@ -2,7 +2,7 @@
     <div>
         <ETable :thead="thead" :tbody="users ? users.map(user => {
           return { key: user.id, values: [user.email, user.firstName,
-            user.lastName, user.isActive, getDateTimeStr(user.lastLogin)] }
+            user.lastName, user.isStaff, user.isActive, getDateTimeStr(user.lastLogin)] }
         }) : []" />
     </div>
 </template>
@@ -20,7 +20,7 @@
     },
     data() {
       return {
-        thead: ['Email', 'Имя', 'Фамилия', 'Активен', 'Последний вход']
+        thead: ['Email', 'Имя', 'Фамилия', 'Активен', 'Управление', 'Последний вход']
       }
     },
     created() {

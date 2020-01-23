@@ -1,6 +1,6 @@
 <template>
     <div>
-        <EAddEdit :title="isEditPage() ? 'Редактирование группы' : 'Создание группы'" />
+        <EAddEdit :title="isEditPage() ? 'Редактирование пользователя' : 'Создание пользователя'" />
         <v-card flat>
             <v-tabs v-if="isEditPage()"
                     v-model="currentTab">
@@ -107,7 +107,8 @@
           email: '',
           firstName: '',
           lastName: '',
-          isActive: false,
+          isActive: true,
+          isStaff: true,
         },
         userGroups: [],
         validate: {
